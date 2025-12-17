@@ -96,7 +96,7 @@ def eye_mode(frame):
 
 cap = cv2.VideoCapture(0)
 
-for i in range(50):
+while True:
     ret, frame = cap.read()
     if not ret:
         break
