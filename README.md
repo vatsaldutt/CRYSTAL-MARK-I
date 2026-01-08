@@ -1,7 +1,8 @@
 # Crystal MARK I
-Version from Aug 25, 2022\
-Original Repo: https://github.com/vatdut8994/Crystal3.0.git \
-Superceding version: https://github.com/vatsaldutt/CRYSTAL-Mark-I.git
+
+Version from Aug 25, 2022
+Original Repo: [https://github.com/vatdut8994/Crystal3.0.git](https://github.com/vatdut8994/Crystal3.0.git)
+Superseding Version: [https://github.com/vatsaldutt/CRYSTAL-Mark-I.git](https://github.com/vatsaldutt/CRYSTAL-Mark-I.git)
 
 **Feature Showcase**
 
@@ -12,27 +13,25 @@ Superceding version: https://github.com/vatsaldutt/CRYSTAL-Mark-I.git
 
 ## Overview
 
-**CRYSTAL MARK I** is the first *truly integrated* version of CRYSTAL where perception, embodiment, multimodal interaction, and large-language reasoning converge into a single, continuously running system.
+**CRYSTAL MARK I** is the first **fully integrated** CRYSTAL system where perception, embodiment, multimodal interaction, and large-language reasoning operate as a single, continuously running agent.
 
-Unlike CRYSTAL0 and CRYSTAL-R0, which were either chatbot-first or hardware-first, **CRYSTAL MARK I is an embodied, perceptual AI system** designed to:
+Unlike CRYSTAL0 (chatbot-first) and CRYSTAL-R0 (hardware-first), **MARK I is an embodied, perceptual AI** that can:
 
-* See (camera + gaze detection)
-* Hear (continuous listening + speaker recognition)
-* Speak (TTS with personality switching)
+* See (camera, face recognition, gaze / eye-state detection)
+* Hear (continuous listening, wake-word detection, speaker recognition)
+* Speak (multilingual TTS with personality switching)
 * Act (robotic arm + smart devices)
-* Reason (ML intent model + LLM completion)
+* Reason (custom ML intent model + LLM completion)
 * Remember (persistent conversational memory)
-* Detect *who* is being spoken to and *whether* it should respond
+* Infer **who** is speaking, **who** is being addressed, and **whether** it should respond
 
-This version represents the transition from *assistant* → *agent*.
+This version marks the shift from *assistant* → **agent**.
 
 ---
 
 ## High-Level Architecture
 
-CRYSTAL MARK I is **multi-threaded, multimodal, and always-on**.
-
-Core subsystems run concurrently:
+CRYSTAL MARK I is **always-on, multi-threaded, and multimodal**. Core subsystems run concurrently and synchronize via shared state and lightweight file-based IPC:
 
 * **Vision Thread**
 
@@ -41,12 +40,12 @@ Core subsystems run concurrently:
   * Addressee inference (is the user looking at CRYSTAL?)
 * **Audio Thread**
 
-  * Continuous speech recognition
+  * Continuous live speech transcription
   * Wake-word detection
   * Speaker diarisation & authorization
 * **Reasoning Thread**
 
-  * Intent classification (custom-trained neural model)
+  * Custom neural intent classification
   * LLM-based response synthesis
   * Contextual memory retrieval
 * **Embodiment Thread**
@@ -55,25 +54,36 @@ Core subsystems run concurrently:
   * Physical execution of language outputs
 * **UI Thread**
 
-  * PyQt5 real-time dashboard
-  * Weather, time, responses, vision feedback
-
-All subsystems are synchronized through shared state and lightweight file-based IPC.
+  * PyQt5 real-time dashboard (responses, vision feedback, weather, time)
 
 ---
 
 ## Key Innovations in MARK I
 
+### Custom Real-Time Speech Transcription (Pre-Existing APIs Didn’t Exist)
+
+At the time, **no usable free real-time speech-to-text systems existed online**. The only comparable option was AssemblyAI, which required **paid API access**.
+
+CRYSTAL MARK I therefore implemented a **custom live speech transcription pipeline** by:
+
+* Converting Google’s speech recognition library to support **true real-time streaming transcription**
+* Running continuously (not clip-based or push-to-talk)
+* Feeding partial and finalized transcripts directly into the reasoning loop
+
+This system was later upgraded by **replacing Google Speech Recognition with a fully local pipeline using OpenAI’s Whisper**, eliminating external dependencies while preserving real-time behavior.
+
+---
+
 ### Speaker Diarisation & Authorization
 
-CRYSTAL MARK I does not blindly respond to sound.
+CRYSTAL does not blindly respond to sound.
 
 * Voice identity is continuously tracked
-* Only authorized speakers (e.g. *Vatsal Dutt*) can issue commands
+* Only authorized speakers (e.g., *Vatsal Dutt*) can issue commands
 * Unauthorized voices trigger security responses
-* Speaker identity is cross-referenced with **face recognition**
+* Voice identity is cross-validated with **face recognition**
 
-This enables **identity-aware interaction**, not just wake-word matching.
+This enables **identity-aware interaction**, not wake-word hacks.
 
 ---
 
@@ -81,32 +91,28 @@ This enables **identity-aware interaction**, not just wake-word matching.
 
 CRYSTAL responds only when:
 
-* Wake word is detected **OR**
-* The user is **visually engaged** (eye contact detected)
+* A wake word is detected **or**
+* The user is visually engaged (eye contact detected)
 
-This eliminates accidental activations and creates **human-like conversational turn-taking**.
-
-If you’re not looking at CRYSTAL, it often won’t respond — even if it hears speech.
+If you’re not looking at CRYSTAL, it often won’t respond—even if it hears speech. This creates **human-like turn-taking** and eliminates accidental activations.
 
 ---
 
-### Gesture Control with MediaPipe (Computer Control)
+### Gesture Control via MediaPipe (Vision-Based HCI)
 
-Using **MediaPipe-based hand and body tracking**, CRYSTAL MARK I supports:
+Using **MediaPipe hand and body tracking**, CRYSTAL MARK I supports:
 
 * Gesture-based computer control
-* Vision-driven command triggering
+* Vision-triggered commands
 * Hands-free interaction without speech
 
-This allows CRYSTAL to act as a **vision-based human–computer interface**, not just a voice assistant.
+This makes CRYSTAL a **vision-driven human–computer interface**, not just a voice assistant.
 
 ---
 
 ### Embodied Intelligence (Robotic Arm Integration)
 
-CRYSTAL MARK I is physically embedded in a robotic arm.
-
-Language outputs can map directly to motor actions:
+CRYSTAL MARK I is physically embedded in a robotic arm. Language outputs map directly to motor actions:
 
 | Language Output | Physical Action   |
 | --------------- | ----------------- |
@@ -116,29 +122,27 @@ Language outputs can map directly to motor actions:
 | “wrist down”    | Wrist rotation    |
 | “open / close”  | Gripper control   |
 
-The LLM is **instruction-constrained** so that physical actions are deterministic and safe.
+The LLM is **instruction-constrained** so physical actions remain deterministic and safe.
 
 ---
 
 ### Hybrid Intelligence Stack
 
-CRYSTAL MARK I combines **three layers of intelligence**:
+CRYSTAL MARK I combines **three intelligence layers**:
 
 1. **Neural Intent Classifier**
 
-   * Custom-trained model using bag-of-words + tflearn
+   * Custom bag-of-words + tflearn model
    * Handles fast, deterministic commands (volume, lights, mode switching)
-
 2. **Rule-Based Control Logic**
 
-   * Safety checks
+   * Safety enforcement
    * Authorization
    * Hardware execution
-
-3. **Large Language Model (LLM) Reasoning**
+3. **LLM Reasoning**
 
    * Context-aware conversation
-   * Personality-driven responses (Jarvis-like behavior)
+   * Personality-driven (Jarvis-like) responses
    * Persistent conversational memory
    * Dynamic prompt construction from past interactions
 
@@ -146,14 +150,14 @@ CRYSTAL MARK I combines **three layers of intelligence**:
 
 ### Massive Custom Dataset Generation
 
-To support long-term intelligence growth, MARK I includes **custom training scripts** that:
+MARK I includes **custom training pipelines** that:
 
-* Scrape and normalize **terabytes of text data** from the web
+* Scrape and normalize **terabytes of web text**
 * Extract structured conversational patterns
 * Append validated interactions to a growing memory store
 * Continuously expand CRYSTAL’s conversational grounding
 
-This was an early attempt at training a local LLM, predating ChatGPT.
+This was an early attempt at **local LLM training**, predating ChatGPT.
 
 ---
 
@@ -162,7 +166,7 @@ This was an early attempt at training a local LLM, predating ChatGPT.
 CRYSTAL MARK I supports:
 
 * Real-time language switching
-* Speech recognition + TTS in multiple languages
+* Multilingual speech recognition and TTS
 * Contextual translation
 * Language-aware reasoning
 
@@ -174,7 +178,7 @@ Language can be changed dynamically via voice:
 
 ### Custom PyQt5 Control Interface
 
-The MARK I UI displays:
+The UI provides:
 
 * Live assistant responses
 * Recognized speech
@@ -183,16 +187,16 @@ The MARK I UI displays:
 * Animated assistant visuals
 * Embedded terminal for system commands
 
-This UI acts as both a **monitoring console** and **control surface**.
+It functions as both a **monitoring console** and **control surface**.
 
 ---
 
 ## Notable Capabilities
 
 * Continuous listening (no push-to-talk)
-* Wake-word variants & phonetic robustness
+* Wake-word variants with phonetic robustness
 * Smart device control (desk lamp via local network)
-* Email & notification checking
+* Email and notification checking
 * Web search fallback for unknown queries
 * Persistent memory injection into LLM prompts
 * Assistant personality switching (“Crystal” ↔ “Krish”)
@@ -202,7 +206,7 @@ This UI acts as both a **monitoring console** and **control surface**.
 
 ## Historical Significance
 
-CRYSTAL MARK I marks the moment where CRYSTAL stopped being:
+CRYSTAL MARK I is where CRYSTAL stopped being:
 
 > “a chatbot with features”
 
@@ -210,9 +214,9 @@ and became:
 
 > **an always-on, perceptually grounded artificial agent**
 
-This version directly influenced later CRYSTAL architectures that move toward:
+It directly informed later CRYSTAL architectures focused on:
 
-* Better memory systems
+* Stronger memory systems
 * Safer embodiment
 * Cleaner agent loops
 * Scalable reasoning frameworks
@@ -223,3 +227,7 @@ This version directly influenced later CRYSTAL architectures that move toward:
 
 **Vatsal Dutt**
 Creator of CRYSTAL
+
+---
+
+If you want, I can make an **even more aggressive résumé / portfolio cut** or a **paper-style version** with the same zero-loss constraint.
