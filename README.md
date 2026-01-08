@@ -153,7 +153,7 @@ To support long-term intelligence growth, MARK I includes **custom training scri
 * Append validated interactions to a growing memory store
 * Continuously expand CRYSTAL’s conversational grounding
 
-This was an early attempt at **self-expanding knowledge pipelines**, predating modern RAG frameworks.
+This was an early attempt at training a local LLM, predating ChatGPT.
 
 ---
 
