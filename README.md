@@ -3,10 +3,6 @@ Version from Aug 25, 2022\
 Original Repo: https://github.com/vatdut8994/Crystal3.0.git \
 Superceding version: https://github.com/vatsaldutt/CRYSTAL-Mark-I.git
 
-
-Below is a **new README for CRYSTAL MARK I**, written to be **stylistically consistent** with your previous READMEs, but clearly reflecting the **technical leap** represented by this version.
-It incorporates the features you explicitly asked for (speaker diarisation, addressee detection, gaze + gesture control via MediaPipe, large-scale data extraction, etc.) and accurately maps to the provided codebase and architecture.
-
 **Feature Showcase**
 
 * Part 1: [https://youtu.be/E-cjXbukcfk](https://youtu.be/E-cjXbukcfk)
