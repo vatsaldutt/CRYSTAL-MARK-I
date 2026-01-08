@@ -13,25 +13,11 @@ Superseding Version: [https://github.com/vatsaldutt/CRYSTAL-Mark-I.git](https://
 
 ## Overview
 
-**CRYSTAL MARK I** is the first **fully integrated** CRYSTAL system where perception, embodiment, multimodal interaction, and large-language reasoning operate as a single, continuously running agent.
-
-Unlike CRYSTAL0 (chatbot-first) and CRYSTAL-R0 (hardware-first), **MARK I is an embodied, perceptual AI** that can:
-
-* See (camera, face recognition, gaze / eye-state detection)
-* Hear (continuous listening, wake-word detection, speaker recognition)
-* Speak (multilingual TTS with personality switching)
-* Act (robotic arm + smart devices)
-* Reason (custom ML intent model + LLM completion)
-* Remember (persistent conversational memory)
-* Infer **who** is speaking, **who** is being addressed, and **whether** it should respond
-
-This version marks the shift from *assistant* → **agent**.
-
----
+**CRYSTAL MARK I** is the first **fully integrated** CRYSTAL system where perception, embodiment, multimodal interaction, and large-language reasoning operate as a single, continuously running agent. It introduced a stronger memory system, safer embodiment, cleaner agent loops, and scalable reasoning frameworks.
 
 ## High-Level Architecture
 
-CRYSTAL MARK I is **always-on, multi-threaded, and multimodal**. Core subsystems run concurrently and synchronize via shared state and lightweight file-based IPC:
+CRYSTAL MARK I is always-on, multi-threaded, and multimodal. Core subsystems run concurrently and synchronize via shared state and lightweight file-based IPC:
 
 * **Vision Thread**
 
@@ -62,15 +48,13 @@ CRYSTAL MARK I is **always-on, multi-threaded, and multimodal**. Core subsystems
 
 ### Custom Real-Time Speech Transcription (Pre-Existing APIs Didn’t Exist)
 
-At the time, **no usable free real-time speech-to-text systems existed online**. The only comparable option was AssemblyAI, which required **paid API access**.
+At the time, no usable free real-time speech-to-text systems existed online. The only comparable option was AssemblyAI, which required paid API access.
 
-CRYSTAL MARK I therefore implemented a **custom live speech transcription pipeline** by:
+CRYSTAL MARK I therefore implemented a custom live speech transcription pipeline by converting Google’s speech recognition library to support true real-time streaming transcription, then I run continuously (not clip-based or push-to-talk). It then feeds partial and finalized transcripts directly into the reasoning loop
 
-* Converting Google’s speech recognition library to support **true real-time streaming transcription**
-* Running continuously (not clip-based or push-to-talk)
-* Feeding partial and finalized transcripts directly into the reasoning loop
-
-This system was later upgraded by **replacing Google Speech Recognition with a fully local pipeline using OpenAI’s Whisper**, eliminating external dependencies while preserving real-time behavior.
+This system was later upgraded by replacing Google Speech Recognition with a fully local pipeline using OpenAI’s Whisper, eliminating external dependencies while preserving real-time behavior.
+### Efficient Memory system for LLMs, predating ChatGPT
+CRYSTAL utilized an architecture to stored and access memories for context in the conversation. All conversations are stored appended to a file to be retrieved later. If something has already been asked, it provides the previously stored answer. Any new query is processed through NLTK to identify nouns which are searched throughout the memory database for all relavent information. This reduces token counts while having most essential details in context memory.
 
 ---
 
@@ -91,22 +75,22 @@ This enables **identity-aware interaction**, not wake-word hacks.
 
 CRYSTAL responds only when:
 
-* A wake word is detected **or**
+* A wake word is detected or
 * The user is visually engaged (eye contact detected)
 
-If you’re not looking at CRYSTAL, it often won’t respond—even if it hears speech. This creates **human-like turn-taking** and eliminates accidental activations.
+If you’re not looking at CRYSTAL, it often won’t respond—even if it hears speech. This creates human-like turn-taking and eliminates accidental activations.
 
 ---
 
 ### Gesture Control via MediaPipe (Vision-Based HCI)
 
-Using **MediaPipe hand and body tracking**, CRYSTAL MARK I supports:
+Using MediaPipe hand and body tracking, CRYSTAL MARK I supports:
 
 * Gesture-based computer control
 * Vision-triggered commands
 * Hands-free interaction without speech
 
-This makes CRYSTAL a **vision-driven human–computer interface**, not just a voice assistant.
+This makes CRYSTAL a vision-driven human–computer interface, not just a voice assistant.
 
 ---
 
@@ -122,13 +106,13 @@ CRYSTAL MARK I is physically embedded in a robotic arm. Language outputs map dir
 | “wrist down”    | Wrist rotation    |
 | “open / close”  | Gripper control   |
 
-The LLM is **instruction-constrained** so physical actions remain deterministic and safe.
+The LLM is instruction-constrained so physical actions remain deterministic and safe.
 
 ---
 
 ### Hybrid Intelligence Stack
 
-CRYSTAL MARK I combines **three intelligence layers**:
+CRYSTAL MARK I combines three intelligence layers:
 
 1. **Neural Intent Classifier**
 
@@ -150,14 +134,14 @@ CRYSTAL MARK I combines **three intelligence layers**:
 
 ### Massive Custom Dataset Generation
 
-MARK I includes **custom training pipelines** that:
+MARK I includes custom training pipelines that:
 
-* Scrape and normalize **terabytes of web text**
+* Scrape and normalize terabytes of web text
 * Extract structured conversational patterns
 * Append validated interactions to a growing memory store
 * Continuously expand CRYSTAL’s conversational grounding
 
-This was an early attempt at **local LLM training**, predating ChatGPT.
+This was an early attempt at local LLM training, predating ChatGPT.
 
 ---
 
@@ -187,7 +171,7 @@ The UI provides:
 * Animated assistant visuals
 * Embedded terminal for system commands
 
-It functions as both a **monitoring console** and **control surface**.
+It functions as both a monitoring console and control surface.
 
 ---
 
@@ -204,30 +188,7 @@ It functions as both a **monitoring console** and **control surface**.
 
 ---
 
-## Historical Significance
-
-CRYSTAL MARK I is where CRYSTAL stopped being:
-
-> “a chatbot with features”
-
-and became:
-
-> **an always-on, perceptually grounded artificial agent**
-
-It directly informed later CRYSTAL architectures focused on:
-
-* Stronger memory systems
-* Safer embodiment
-* Cleaner agent loops
-* Scalable reasoning frameworks
-
----
-
 ## Author
 
 **Vatsal Dutt**
 Creator of CRYSTAL
-
----
-
-If you want, I can make an **even more aggressive résumé / portfolio cut** or a **paper-style version** with the same zero-loss constraint.
